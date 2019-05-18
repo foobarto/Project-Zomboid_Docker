@@ -21,6 +21,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
 	curl \
 	lib32gcc1 \
+	libstdc++6 \
 	default-jre \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
