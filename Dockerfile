@@ -1,6 +1,4 @@
-FROM ubuntu:14.04
-
-MAINTAINER TuRzAm
+FROM ubuntu:18.04
 
 # Server Name
 ENV SERVERNAME "servertest"
