@@ -28,7 +28,11 @@ sed -i -e s/RCONPassword=[[:space:]]/RCONPassword=${RCON_PASSWORD}/ $INIFILE
 
 
 echo -e "Launching server..."
-/home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD} &
+if [[ -z "${NOSTEAM}" ]]; then
+  /home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -nosteam -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD} &
+else
+  /home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD} &
+fi
 
 
 # save & exit when docker stop or Ctrl+C
