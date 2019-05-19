@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-[ -p /tmp/FIFO ] && rm /tmp/FIFO
-mkfifo /tmp/FIFO
 
 # Check if both directory are writable
 if [ ! -w /home/steam/Zomboid ]; then 
@@ -29,14 +27,7 @@ sed -i -e s/RCONPassword=[[:space:]]/RCONPassword=${RCON_PASSWORD}/ $INIFILE
 
 echo -e "Launching server..."
 if [[ -z "${NOSTEAM}" ]]; then
-  /home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD} &
+  /home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD}
 else
-  /home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -nosteam -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD} &
+  /home/steam/projectzomboid/start-server.sh -servername ${SERVERNAME} -nosteam -steamport1 ${STEAMPORT1} -steamport2 ${STEAMPORT2} -adminpassword ${ADMINPASSWORD}
 fi
-
-
-# save & exit when docker stop or Ctrl+C
-trap 'echo "Shutdown server..."; /home/steam/rcon -P${RCON_PASSWORD} -a127.0.0.1 -p27015 quit' INT
-trap 'echo "Shutdown server..."; /home/steam/rcon -P${RCON_PASSWORD} -a127.0.0.1 -p27015 quit' TERM
-read < /tmp/FIFO &
-wait
